@@ -1,0 +1,25 @@
+name: Deploy to HuggingFace Spaces
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Push to HuggingFace Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.email "yaswanth7868@gmail.com"
+          git config --global user.name "Yaswanth Boggarapu"
+          git remote add hf https://Yaswanth-Boggarapu:${HF_TOKEN}@huggingface.co/spaces/Yaswanth-Boggarapu/portfolio
+          git push hf main --force
