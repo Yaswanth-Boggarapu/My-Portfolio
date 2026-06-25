@@ -25,15 +25,24 @@
   section { padding: 5.5rem 0; }
   .container { max-width: 900px; margin: 0 auto; padding: 0 2.5rem; }
   #hero { min-height: 100vh; display: flex; align-items: center; padding-top: 56px; position: relative; overflow: hidden; }
-  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 100%); opacity: 0.4; }
-  .hero-content { position: relative; z-index: 1; }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse 100% 80% at 50% 20%, black 40%, transparent 100%); opacity: 0.5; }
+  .hero-inner { position: relative; z-index: 1; width: 100%; padding: 0 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .hero-content { }
   .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--accent-light); background: var(--accent-dim); border: 0.5px solid rgba(127,119,221,0.3); padding: 4px 12px; border-radius: 20px; margin-bottom: 1.5rem; letter-spacing: 0.06em; text-transform: uppercase; }
   .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-  h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 1rem; }
+  h1 { font-size: clamp(2.2rem, 3.2vw, 4rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem; }
   h1 .accent { color: var(--accent-light); }
-  .hero-subtitle { font-size: 1rem; color: var(--muted); max-width: 560px; margin-bottom: 2.5rem; line-height: 1.75; }
+  .hero-subtitle { font-size: 1rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.75; }
   .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-visual { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+  .hero-visual-bar { background: var(--bg3); padding: 10px 14px; display: flex; align-items: center; gap: 6px; border-bottom: 0.5px solid var(--border); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
+  .hero-visual-body { padding: 1.5rem; font-family: var(--mono); font-size: 12.5px; line-height: 2; }
+  .hl-comment { color: #454545; } .hl-key { color: var(--accent-light); } .hl-val { color: var(--teal-light); } .hl-str { color: #e8b86d; }
+  .hl-cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); vertical-align: middle; animation: blink 1.1s step-end infinite; margin-left: 2px; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-family: var(--sans); }
   .btn-primary { background: var(--accent); color: #fff; }
   .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
@@ -86,6 +95,7 @@
     .about-layout { grid-template-columns: 1fr; gap: 2rem; }
     .skills-grid { grid-template-columns: repeat(2, 1fr); }
     h1 { font-size: clamp(2rem, 4vw, 3rem); }
+    .hero-inner { padding: 0 2.5rem; gap: 2.5rem; }
   }
 
   /* Tablet portrait / large phone (641px – 768px) */
@@ -96,6 +106,8 @@
     nav { padding: 0 1.5rem; }
     section { padding: 4rem 0; }
     .tl-header { flex-direction: column; gap: 2px; }
+    .hero-inner { grid-template-columns: 1fr; padding: 0 1.5rem; }
+    .hero-visual { display: none; }
   }
 
   /* Mobile (< 641px) */
@@ -107,6 +119,8 @@
     .nav-links { gap: 1rem; }
     .nav-links a { font-size: 12px; }
     section { padding: 3.5rem 0; }
+    .hero-inner { grid-template-columns: 1fr; padding: 0 1rem; }
+    .hero-visual { display: none; }
     .hero-cta { flex-direction: column; }
     .btn { width: 100%; justify-content: center; }
     .stat-grid { grid-template-columns: repeat(2, 1fr); }
@@ -130,13 +144,37 @@
 
 <section id="hero">
   <div class="hero-grid"></div>
-  <div class="container hero-content">
-    <div class="hero-tag">Open to work · Dublin / Cork / Remote</div>
-    <h1>Hi, I'm <span class="accent">Yaswanth Boggarapu.</span><br>I build AI systems<br>that ship to production.</h1>
-    <p class="hero-subtitle">Aspiring Data Scientist with hands-on experience in AI/ML model development, NLP, and big data analytics. Skilled in Python, R, and cloud deployment on GCP. Building with transformers, LLMs, and scalable GenAI pipelines.</p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">View projects ↓</a>
-      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">Open to work · Dublin / Cork / Remote</div>
+      <h1>Hi, I'm <span class="accent">Yaswanth Boggarapu.</span><br>I build AI systems that ship to production.</h1>
+      <p class="hero-subtitle">AI/ML Engineer at Maghil. MSc Statistical Data Science at UCD. Building production GenAI pipelines with Gemini, LangChain, RAG, and GCP.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View projects ↓</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-bar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+      </div>
+      <div class="hero-visual-body">
+        <span class="hl-comment"># yaswanth.py</span><br>
+        <span class="hl-key">profile</span> = {<br>
+        &nbsp;&nbsp;<span class="hl-str">"role"</span>: <span class="hl-val">"AI/ML Engineer"</span>,<br>
+        &nbsp;&nbsp;<span class="hl-str">"stack"</span>: [<span class="hl-val">"Gemini"</span>, <span class="hl-val">"LangChain"</span>, <span class="hl-val">"RAG"</span>],<br>
+        &nbsp;&nbsp;<span class="hl-str">"cloud"</span>: <span class="hl-val">"GCP"</span>,<br>
+        &nbsp;&nbsp;<span class="hl-str">"location"</span>: <span class="hl-val">"Dublin, IE"</span>,<br>
+        &nbsp;&nbsp;<span class="hl-str">"open_to_work"</span>: <span class="hl-key">True</span><br>
+        }<br><br>
+        <span class="hl-comment"># currently building</span><br>
+        <span class="hl-key">pipeline</span> = <span class="hl-val">GenAIPipeline</span>(<br>
+        &nbsp;&nbsp;model=<span class="hl-str">"gemini-2.5-flash"</span>,<br>
+        &nbsp;&nbsp;deploy=<span class="hl-str">"production"</span><br>
+        )<span class="hl-cursor"></span>
+      </div>
     </div>
   </div>
 </section>
